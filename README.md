@@ -6,8 +6,6 @@
 
 **A powerful VS Code extension that streamlines LaTeX thesis writing with smart navigation, bibliography management, and real-time document statistics.**
 
-![LaTeX Thesis Helper Demo](https://raw.githubusercontent.com/Seuketchi/latex-helper/main/images/demo.gif)
-
 ---
 
 ## ✨ Features
@@ -18,8 +16,6 @@ Get real-time insights into your document with an interactive stats panel:
 - **Page estimate** — Know your document length
 - **Citation count** — Monitor your references
 - **Figures & tables count** — Keep track of visual elements
-
-![Stats Panel](https://raw.githubusercontent.com/Seuketchi/latex-helper/main/images/stats-panel.png)
 
 ### 📑 Section Navigator
 Navigate your thesis structure effortlessly:
