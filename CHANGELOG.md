@@ -4,7 +4,21 @@ All notable changes to the "LaTeX Thesis Helper" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [0.2.0] - 2024-11-29
+## [0.3.0] - 2025-11-29
+
+### Added
+- 📄 **New Document from Template** command
+  - IEEE Conference Paper template
+  - IEEE Journal Article template
+  - Standard Thesis template (report class)
+  - Book-style Thesis template
+  - Academic Article template
+  - Research Proposal template
+  - Dissertation template
+- Creates complete project structure with folders and files
+- Quick Insert now includes "New Document" and "Word Goal" shortcuts
+
+## [0.2.0] - 2025-11-29
 
 ### Added
 - 🎯 Word count goal tracker with visual progress bar

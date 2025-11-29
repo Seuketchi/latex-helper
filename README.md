@@ -10,7 +10,19 @@
 
 ## ✨ Features
 
-### 🎯 Word Count Goal Tracker (New!)
+### 📄 Document Templates (New!)
+Start your project with professional templates:
+- **IEEE Conference Paper** — Standard IEEE conference format
+- **IEEE Journal Article** — Two-column journal format
+- **Thesis (Standard)** — Complete thesis structure with chapters
+- **Thesis (Book Style)** — Book-style with parts and chapters
+- **Academic Article** — Simple article format
+- **Research Proposal** — Proposal with timeline and budget
+- **Dissertation** — Full dissertation with front matter
+
+Use `LaTeX Helper: New Document from Template` to create a complete project structure!
+
+### 🎯 Word Count Goal Tracker
 Stay motivated with a customizable word count goal:
 - **Set your target** — Use `LaTeX Helper: Set Word Count Goal`
 - **Visual progress bar** — See your progress at a glance
@@ -111,6 +123,7 @@ This extension contributes the following commands:
 | `LaTeX Helper: Insert Citation` | Search and insert a citation |
 | `LaTeX Helper: Insert Section` | Insert a new section |
 | `LaTeX Helper: Insert Thesis Template` | Insert a thesis chapter template |
+| `LaTeX Helper: New Document from Template` | Create a new project from IEEE, thesis, or article templates |
 | `LaTeX Helper: Set Word Count Goal` | Set a word count target with progress tracking |
 | `LaTeX Helper: Show Document Stats` | Display document statistics |
 

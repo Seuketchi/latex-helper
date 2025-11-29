@@ -5,6 +5,7 @@ import { FigureTableProvider } from './providers/figureTableProvider';
 import { SnippetProvider } from './providers/snippetProvider';
 import { StatsViewProvider } from './providers/statsProvider';
 import { TemplateInserter } from './providers/templateInserter';
+import { DocumentTemplateProvider } from './providers/documentTemplates';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('LaTeX Thesis Helper is now active!');
@@ -16,6 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
     const snippetProvider = new SnippetProvider();
     const statsProvider = new StatsViewProvider(context.extensionUri);
     const templateInserter = new TemplateInserter();
+    const documentTemplateProvider = new DocumentTemplateProvider();
 
     // Register tree views
     vscode.window.registerTreeDataProvider('latexHelper.sections', sectionProvider);
@@ -51,7 +53,10 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('latexHelper.setWordGoal', () => statsProvider.setWordGoal()),
         
         // Compile command
-        vscode.commands.registerCommand('latexHelper.compileDocument', () => compileDocument())
+        vscode.commands.registerCommand('latexHelper.compileDocument', () => compileDocument()),
+        
+        // Document template command
+        vscode.commands.registerCommand('latexHelper.newFromTemplate', () => documentTemplateProvider.createFromTemplate())
     );
 
     // Auto-refresh on document save

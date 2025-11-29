@@ -2,7 +2,7 @@
   "name": "latex-thesis-helper",
   "displayName": "LaTeX Thesis Helper",
   "description": "LaTeX editing assistant with snippets, bibliography helper, section navigator, figure manager, and live stats",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "seuketchi",
   "icon": "icon.png",
   "repository": {
@@ -101,6 +101,12 @@
         "title": "Set Word Count Goal",
         "category": "LaTeX Helper",
         "icon": "$(target)"
+      },
+      {
+        "command": "latexHelper.newFromTemplate",
+        "title": "New Document from Template",
+        "category": "LaTeX Helper",
+        "icon": "$(new-file)"
       }
     ],
     "viewsContainers": {

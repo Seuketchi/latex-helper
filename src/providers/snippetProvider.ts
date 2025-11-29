@@ -12,11 +12,13 @@ export class SnippetProvider implements vscode.TreeDataProvider<SnippetItem> {
     readonly onDidChangeTreeData: vscode.Event<SnippetItem | undefined | null | void> = this._onDidChangeTreeData.event;
 
     private snippets: SnippetInfo[] = [
+        { name: 'New Document', command: 'latexHelper.newFromTemplate', icon: 'new-file', description: 'Create from template (IEEE, Thesis...)' },
         { name: 'Figure', command: 'latexHelper.insertFigure', icon: 'file-media', description: 'Insert figure environment' },
         { name: 'Table', command: 'latexHelper.insertTable', icon: 'table', description: 'Insert table environment' },
         { name: 'Citation', command: 'latexHelper.insertCitation', icon: 'quote', description: 'Insert citation' },
         { name: 'Section', command: 'latexHelper.insertSection', icon: 'list-tree', description: 'Insert section' },
         { name: 'Template', command: 'latexHelper.insertTemplate', icon: 'file-code', description: 'Insert thesis template' },
+        { name: 'Word Goal', command: 'latexHelper.setWordGoal', icon: 'target', description: 'Set word count goal' },
         { name: 'Compile', command: 'latexHelper.compileDocument', icon: 'play', description: 'Compile document' }
     ];
 
