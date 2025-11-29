@@ -2,7 +2,7 @@
   "name": "latex-thesis-helper",
   "displayName": "LaTeX Thesis Helper",
   "description": "LaTeX editing assistant with snippets, bibliography helper, section navigator, figure manager, and live stats",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "seuketchi",
   "icon": "icon.png",
   "repository": {
@@ -95,6 +95,12 @@
         "title": "Compile LaTeX Document",
         "category": "LaTeX Helper",
         "icon": "$(play)"
+      },
+      {
+        "command": "latexHelper.setWordGoal",
+        "title": "Set Word Count Goal",
+        "category": "LaTeX Helper",
+        "icon": "$(target)"
       }
     ],
     "viewsContainers": {
@@ -179,7 +185,17 @@
         "language": "latex",
         "path": "./snippets/latex.json"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "LaTeX Thesis Helper",
+      "properties": {
+        "latexHelper.wordCountGoal": {
+          "type": "number",
+          "default": 0,
+          "description": "Set a word count goal for your document. Set to 0 to disable."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

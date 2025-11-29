@@ -48,6 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
         
         // Stats command
         vscode.commands.registerCommand('latexHelper.showStats', () => statsProvider.show()),
+        vscode.commands.registerCommand('latexHelper.setWordGoal', () => statsProvider.setWordGoal()),
         
         // Compile command
         vscode.commands.registerCommand('latexHelper.compileDocument', () => compileDocument())

@@ -1,7 +1,7 @@
 # LaTeX Thesis Helper
 
-[![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-blue?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=thesis-tools.latex-thesis-helper)
-[![Version](https://img.shields.io/badge/version-0.1.0-green)](https://github.com/Seuketchi/latex-helper)
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/seuketchi.latex-thesis-helper?label=VS%20Code%20Marketplace&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=seuketchi.latex-thesis-helper)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/seuketchi.latex-thesis-helper)](https://marketplace.visualstudio.com/items?itemName=seuketchi.latex-thesis-helper)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **A powerful VS Code extension that streamlines LaTeX thesis writing with smart navigation, bibliography management, and real-time document statistics.**
@@ -9,6 +9,12 @@
 ---
 
 ## ✨ Features
+
+### 🎯 Word Count Goal Tracker (New!)
+Stay motivated with a customizable word count goal:
+- **Set your target** — Use `LaTeX Helper: Set Word Count Goal`
+- **Visual progress bar** — See your progress at a glance
+- **Percentage tracking** — Know exactly how close you are to your goal
 
 ### 📊 Live Document Stats
 Get real-time insights into your document with an interactive stats panel:
@@ -105,6 +111,7 @@ This extension contributes the following commands:
 | `LaTeX Helper: Insert Citation` | Search and insert a citation |
 | `LaTeX Helper: Insert Section` | Insert a new section |
 | `LaTeX Helper: Insert Thesis Template` | Insert a thesis chapter template |
+| `LaTeX Helper: Set Word Count Goal` | Set a word count target with progress tracking |
 | `LaTeX Helper: Show Document Stats` | Display document statistics |
 
 ---
@@ -119,6 +126,11 @@ See the [issue tracker](https://github.com/Seuketchi/latex-helper/issues) for cu
 ---
 
 ## 📝 Release Notes
+
+### 0.2.0
+- ✨ **New:** Word count goal tracker with progress bar
+- ✨ **New:** Configurable word count target in settings
+- 🎨 Improved stats panel UI with number formatting
 
 ### 0.1.0 (Initial Release)
 - ✅ Live document statistics panel
