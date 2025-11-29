@@ -1,0 +1,92 @@
+{
+    "Figure Environment": {
+        "prefix": ["fig", "figure"],
+        "body": [
+            "\\\\begin{figure}[htbp]",
+            "    \\\\centering",
+            "    \\\\includegraphics[width=${1:0.8}\\\\textwidth]{${2:figures/image.png}}",
+            "    \\\\caption{${3:Caption}}",
+            "    \\\\label{fig:${4:label}}",
+            "\\\\end{figure}"
+        ],
+        "description": "Insert figure environment"
+    },
+    "Table Environment": {
+        "prefix": ["tab", "table"],
+        "body": [
+            "\\\\begin{table}[htbp]",
+            "    \\\\centering",
+            "    \\\\caption{${1:Caption}}",
+            "    \\\\label{tab:${2:label}}",
+            "    \\\\begin{tabular}{${3:lcc}}",
+            "        \\\\toprule",
+            "        ${4:Header 1} & ${5:Header 2} & ${6:Header 3} \\\\\\\\",
+            "        \\\\midrule",
+            "        ${7:Data} & ${8:Data} & ${9:Data} \\\\\\\\",
+            "        \\\\bottomrule",
+            "    \\\\end{tabular}",
+            "\\\\end{table}"
+        ],
+        "description": "Insert table environment"
+    },
+    "Citation": {
+        "prefix": ["cite", "citation"],
+        "body": ["\\\\cite{${1:key}}"],
+        "description": "Insert citation"
+    },
+    "Section": {
+        "prefix": ["sec", "section"],
+        "body": ["\\\\section{${1:Title}}\\\\label{sec:${2:label}}", "$0"],
+        "description": "Insert section"
+    },
+    "Subsection": {
+        "prefix": ["subsec", "subsection"],
+        "body": ["\\\\subsection{${1:Title}}\\\\label{sec:${2:label}}", "$0"],
+        "description": "Insert subsection"
+    },
+    "Equation": {
+        "prefix": ["eq", "equation"],
+        "body": [
+            "\\\\begin{equation}",
+            "    ${1:equation}",
+            "    \\\\label{eq:${2:label}}",
+            "\\\\end{equation}"
+        ],
+        "description": "Insert equation environment"
+    },
+    "Itemize": {
+        "prefix": ["item", "itemize"],
+        "body": [
+            "\\\\begin{itemize}",
+            "    \\\\item ${1:First item}",
+            "    \\\\item ${2:Second item}",
+            "\\\\end{itemize}"
+        ],
+        "description": "Insert itemize environment"
+    },
+    "Enumerate": {
+        "prefix": ["enum", "enumerate"],
+        "body": [
+            "\\\\begin{enumerate}",
+            "    \\\\item ${1:First item}",
+            "    \\\\item ${2:Second item}",
+            "\\\\end{enumerate}"
+        ],
+        "description": "Insert enumerate environment"
+    },
+    "Bold": {
+        "prefix": ["bf", "bold"],
+        "body": ["\\\\textbf{${1:text}}"],
+        "description": "Bold text"
+    },
+    "Italic": {
+        "prefix": ["it", "italic"],
+        "body": ["\\\\textit{${1:text}}"],
+        "description": "Italic text"
+    },
+    "Reference": {
+        "prefix": ["ref", "reference"],
+        "body": ["\\\\ref{${1:label}}"],
+        "description": "Insert reference"
+    }
+}

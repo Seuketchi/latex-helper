@@ -1,0 +1,197 @@
+{
+  "name": "latex-thesis-helper",
+  "displayName": "LaTeX Thesis Helper",
+  "description": "LaTeX editing assistant with snippets, bibliography helper, section navigator, figure manager, and live stats",
+  "version": "0.1.0",
+  "publisher": "thesis-tools",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Other"
+  ],
+  "keywords": [
+    "latex",
+    "thesis",
+    "academic",
+    "bibliography",
+    "bibtex"
+  ],
+  "activationEvents": [
+    "onLanguage:latex",
+    "onLanguage:bibtex",
+    "workspaceContains:**/*.tex"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "latexHelper.insertFigure",
+        "title": "Insert Figure",
+        "category": "LaTeX Helper"
+      },
+      {
+        "command": "latexHelper.insertTable",
+        "title": "Insert Table",
+        "category": "LaTeX Helper"
+      },
+      {
+        "command": "latexHelper.insertCitation",
+        "title": "Insert Citation",
+        "category": "LaTeX Helper"
+      },
+      {
+        "command": "latexHelper.insertSection",
+        "title": "Insert Section",
+        "category": "LaTeX Helper"
+      },
+      {
+        "command": "latexHelper.insertTemplate",
+        "title": "Insert Thesis Template",
+        "category": "LaTeX Helper"
+      },
+      {
+        "command": "latexHelper.refreshSections",
+        "title": "Refresh Sections",
+        "category": "LaTeX Helper",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "latexHelper.refreshBibliography",
+        "title": "Refresh Bibliography",
+        "category": "LaTeX Helper",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "latexHelper.refreshFigures",
+        "title": "Refresh Figures & Tables",
+        "category": "LaTeX Helper",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "latexHelper.goToSection",
+        "title": "Go to Section",
+        "category": "LaTeX Helper"
+      },
+      {
+        "command": "latexHelper.goToFigure",
+        "title": "Go to Figure/Table",
+        "category": "LaTeX Helper"
+      },
+      {
+        "command": "latexHelper.showStats",
+        "title": "Show Document Stats",
+        "category": "LaTeX Helper"
+      },
+      {
+        "command": "latexHelper.compileDocument",
+        "title": "Compile LaTeX Document",
+        "category": "LaTeX Helper",
+        "icon": "$(play)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "latex-helper",
+          "title": "LaTeX Helper",
+          "icon": "$(book)"
+        }
+      ]
+    },
+    "views": {
+      "latex-helper": [
+        {
+          "id": "latexHelper.stats",
+          "name": "Document Stats",
+          "type": "webview"
+        },
+        {
+          "id": "latexHelper.sections",
+          "name": "Sections"
+        },
+        {
+          "id": "latexHelper.bibliography",
+          "name": "Bibliography"
+        },
+        {
+          "id": "latexHelper.figures",
+          "name": "Figures & Tables"
+        },
+        {
+          "id": "latexHelper.snippets",
+          "name": "Quick Insert"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "latexHelper.refreshSections",
+          "when": "view == latexHelper.sections",
+          "group": "navigation"
+        },
+        {
+          "command": "latexHelper.refreshBibliography",
+          "when": "view == latexHelper.bibliography",
+          "group": "navigation"
+        },
+        {
+          "command": "latexHelper.refreshFigures",
+          "when": "view == latexHelper.figures",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "latexHelper.insertCitation",
+          "when": "view == latexHelper.bibliography",
+          "group": "inline"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "latexHelper.insertCitation",
+        "key": "ctrl+shift+c",
+        "when": "editorTextFocus && editorLangId == latex"
+      },
+      {
+        "command": "latexHelper.insertFigure",
+        "key": "ctrl+shift+f",
+        "when": "editorTextFocus && editorLangId == latex"
+      },
+      {
+        "command": "latexHelper.insertTable",
+        "key": "ctrl+shift+t",
+        "when": "editorTextFocus && editorLangId == latex"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "latex",
+        "path": "./snippets/latex.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "typescript-eslint": "^8.46.3",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
