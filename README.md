@@ -12,6 +12,7 @@
 
 ### 📄 Document Templates (New!)
 Start your project with professional templates:
+- **COE198 Research Proposal** — MSU-IIT COE198 Research Methods (Rho class)
 - **IEEE Conference Paper** — Standard IEEE conference format
 - **IEEE Journal Article** — Two-column journal format
 - **Thesis (Standard)** — Complete thesis structure with chapters

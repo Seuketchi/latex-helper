@@ -4,6 +4,14 @@ All notable changes to the "LaTeX Thesis Helper" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.4.0] - 2025-11-29
+
+### Added
+- 🎓 **COE198 Research Proposal** template (MSU-IIT)
+  - Complete Rho class integration
+  - Pre-configured sections for research proposals
+  - Includes bibliography setup and formatting
+
 ## [0.3.0] - 2025-11-29
 
 ### Added

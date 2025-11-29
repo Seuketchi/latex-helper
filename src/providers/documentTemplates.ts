@@ -13,6 +13,7 @@ export class DocumentTemplateProvider {
     
     async createFromTemplate(): Promise<void> {
         const templates: vscode.QuickPickItem[] = [
+            { label: '🎓 COE198 Research Proposal', description: 'Rho class (MSU-IIT)', detail: 'COE198 Research Methods proposal template' },
             { label: '📄 IEEE Conference Paper', description: 'IEEEtran class', detail: 'Standard IEEE conference paper format' },
             { label: '📄 IEEE Journal Article', description: 'IEEEtran class', detail: 'IEEE journal article format with two columns' },
             { label: '📚 Thesis - Standard', description: 'report class', detail: 'Standard thesis format with chapters' },
@@ -110,6 +111,7 @@ export class DocumentTemplateProvider {
 
     private getTemplate(templateLabel: string, projectName: string): DocumentTemplate {
         const templates: { [key: string]: DocumentTemplate } = {
+            '🎓 COE198 Research Proposal': this.getCOE198Template(projectName),
             '📄 IEEE Conference Paper': this.getIEEEConferenceTemplate(projectName),
             '📄 IEEE Journal Article': this.getIEEEJournalTemplate(projectName),
             '📚 Thesis - Standard': this.getStandardThesisTemplate(projectName),
@@ -120,6 +122,527 @@ export class DocumentTemplateProvider {
         };
 
         return templates[templateLabel] || this.getAcademicArticleTemplate(projectName);
+    }
+
+    private getCOE198Template(projectName: string): DocumentTemplate {
+        return {
+            label: 'COE198 Research Proposal',
+            description: 'Rho class (MSU-IIT)',
+            detail: 'COE198 Research Methods proposal template',
+            files: {
+                'main.tex': `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COE198 Research Proposal Template
+% Based on Rho LaTeX Template Version 2.1.1
+% License: Creative Commons CC BY 4.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\\documentclass[9pt,a4paper,twoside]{rho-class/rho}
+\\usepackage[english]{babel}
+\\usepackage{pgfgantt}
+
+% Landscape pages
+\\usepackage{pdflscape}
+\\usepackage{fancyhdr} 
+\\fancypagestyle{mylandscape}{
+\\fancyhf{}
+\\fancyfoot{%
+\\makebox[\\textwidth][r]{%
+  \\rlap{\\hspace{.75cm}%
+    \\smash{%
+      \\raisebox{4.87in}{%
+        \\rotatebox{90}{\\thepage}}}}}}
+\\renewcommand{\\headrulewidth}{0pt}
+\\renewcommand{\\footrulewidth}{0pt}
+}
+
+\\usepackage{rotating}
+\\usepackage{tikz}
+
+\\setbool{rho-abstract}{true}
+\\setbool{corres-info}{false}
+
+%----------------------------------------------------------
+% TITLE
+%----------------------------------------------------------
+
+\\journalname{COE198 Research Methods | Proposal}
+\\title{${projectName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}}
+
+%----------------------------------------------------------
+% AUTHORS AND AFFILIATIONS
+%----------------------------------------------------------
+
+\\author[1]{Your Name}
+\\author[2]{Adviser Name}
+
+\\affil[1]{Student Researcher}
+\\affil[2]{Faculty Adviser, Department of Computer Engineering and Mechatronics, MSU-IIT}
+
+%----------------------------------------------------------
+% DATES
+%----------------------------------------------------------
+
+\\dates{This manuscript was compiled on \\today}
+
+%----------------------------------------------------------
+% FOOTER INFORMATION
+%----------------------------------------------------------
+
+\\leadauthor{Your Last Name}
+\\footinfo{Creative Commons CC BY 4.0}
+\\smalltitle{COE198 Research Methods}
+\\institution{College of Engineering, MSU-IIT}
+
+%----------------------------------------------------------
+% ABSTRACT
+%----------------------------------------------------------
+
+\\begin{abstract}
+    This section provides a concise overview of the proposed research. An abstract is a brief statement outlining the research focus, a snapshot of the methodology, and a rationale for its importance. It should be succinct yet compelling (150-250 words).
+\\end{abstract}
+
+\\keywords{keyword 1, keyword 2, keyword 3, keyword 4, keyword 5}
+
+%----------------------------------------------------------
+
+\\begin{document}
+
+\\maketitle
+\\thispagestyle{firststyle}
+\\tableofcontents
+\\linenumbers
+
+%----------------------------------------------------------
+
+\\section{INTRODUCTION}
+    
+\\rhostart{T}his chapter sets the foundation for the research by providing a clear context, problem statement, justification, objectives, and research questions.
+
+\\subsection{Background of the Study}
+\\begin{itemize}
+    \\item Demonstrate a clear understanding of the problem's origin and evolution.
+    \\item Identify specific gaps considered to be the root of the problem, supported by evidence.
+    \\item Limit this section to a maximum of 5 paragraphs.
+    \\item Begin with a global perspective of the issue, then narrow it down to the local scenario.
+\\end{itemize}
+
+\\subsection{Statement of the Problem}
+\\begin{itemize}
+    \\item Clearly define the exact nature of the problem.
+    \\item Explain why and how it constitutes a problem, using supporting data.
+    \\item Ensure connectivity with the background information.
+    \\item Limit this section to a maximum of two paragraphs.
+\\end{itemize}
+
+\\subsection{Research Questions}
+\\begin{enumerate}[1.]
+    \\item Research question 1?
+    \\item Research question 2?
+    \\item Research question 3?
+\\end{enumerate}
+
+\\subsection{Objectives of the Study}
+
+\\subsubsection*{General Objective}
+State one overarching objective aligned with the title of the research.
+
+\\subsubsection*{Specific Objectives}
+\\begin{enumerate}[1.]
+    \\item Specific objective 1
+    \\item Specific objective 2
+    \\item Specific objective 3
+\\end{enumerate}
+
+\\subsection{Originality of the Study}
+Highlight and articulate the unique contributions and novel aspects of the research.
+
+\\subsection{Significance of the Study}
+\\begin{itemize}
+    \\item Explain why the research is being conducted and identify key beneficiaries.
+    \\item Highlight the significance of addressing the problem.
+    \\item Connect the research to its impact on the United Nations Sustainable Development Goals (UN SDGs).
+\\end{itemize}
+
+\\subsection{Scope and Limitations}
+
+\\subsubsection{Scope}
+Outline the boundaries and constraints of the study.
+
+\\subsubsection{Limitations}
+\\begin{enumerate}
+    \\item Limitation 1
+    \\item Limitation 2
+\\end{enumerate}
+
+\\subsection{Conceptual Framework}
+Provide a conceptualized view of the study problem if suitable.
+
+%----------------------------------------------------------
+
+\\section{REVIEW OF RELATED LITERATURE}
+
+\\subsection{Related Studies}
+Review relevant literature and previous studies.
+
+\\subsection{Synthesis}
+Synthesize the literature and identify gaps.
+
+%----------------------------------------------------------
+
+\\section{METHODOLOGY}
+
+\\subsection{Research Design}
+Describe the overall research approach.
+
+\\subsection{Participants/Subjects}
+Define the study population and sampling method.
+
+\\subsection{Instruments}
+Describe data collection tools.
+
+\\subsection{Data Collection}
+Detail the process of collecting data.
+
+\\subsection{Data Management and Analysis}
+Specify the methods for managing and analyzing data.
+
+\\subsection{Ethical Considerations}
+Address ethical issues (e.g., informed consent, confidentiality).
+
+%----------------------------------------------------------
+
+\\section{WORKPLAN}
+Provide a timeline of research activities (e.g., Gantt chart).
+
+% Include your Gantt chart figure here
+% \\begin{figure}[ht!]
+%     \\includegraphics[width=\\linewidth]{figures/gantt_chart.pdf}
+%     \\caption{Research Plan Gantt Chart}
+%     \\label{fig:gantt_chart}
+% \\end{figure}
+
+%----------------------------------------------------------
+
+\\section{BUDGET}
+Present a detailed budget, including costs for personnel, materials, travel, and other resources.
+
+\\begin{table}[htbp]
+    \\centering
+    \\caption{Research Budget}
+    \\begin{tabular}{lrr}
+        \\toprule
+        \\textbf{Item} & \\textbf{Quantity} & \\textbf{Cost (PHP)} \\\\
+        \\midrule
+        Materials & -- & -- \\\\
+        Equipment & -- & -- \\\\
+        Travel & -- & -- \\\\
+        Other & -- & -- \\\\
+        \\midrule
+        \\textbf{Total} & & \\textbf{--} \\\\
+        \\bottomrule
+    \\end{tabular}
+\\end{table}
+
+%----------------------------------------------------------
+
+\\section{APPENDICES}
+Include supplementary materials such as:
+\\begin{itemize}
+    \\item Instruments (questionnaire, interview schedule, consent form)
+    \\item Copy of ethical approval letter
+\\end{itemize}
+
+%----------------------------------------------------------
+
+\\printbibliography
+
+\\end{document}
+`,
+                'bibliography.bib': `@Article{Sample2024,
+    author = {Sample, Ex},
+    title = {An example reference for a single author article},
+    journal = {Journal of Sample Articles},
+    year = {2024},
+    volume = {1},
+    number = {1},
+    pages = {1-23},
+}
+
+@Article{Multiauthor2020,
+    author = {First-Author, The and Author, Second and Third, Author The},
+    title = {An example article with multiple authors},
+    journal = {Competing Sample Article Journal},
+    year = {2020},
+    volume = {2},
+    number = {4},
+    pages = {6-8},
+}
+
+@Book{FullBook2021,
+    author = {Book Author, Fancy Pants},
+    title = {{Fancy Pants Whole Book}},
+    publisher = {So \\& Fancy Publishing},
+    year = {2021},
+    address = {New York},
+}
+`,
+                'rho-class/rho.cls': this.getRhoClassContent(),
+                'rho-class/rhobabel.sty': this.getRhoBabelContent(),
+                'rho-class/rhoenvs.sty': this.getRhoEnvsContent(),
+                'figures/.gitkeep': '',
+            }
+        };
+    }
+
+    private getRhoClassContent(): string {
+        return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rho LaTeX Class - Version 2.1.1 (01/09/2024)
+% Authors: Guillermo Jimenez, Eduardo Gracidas
+% License: Creative Commons CC BY 4.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\\NeedsTeXFormat{LaTeX2e}
+\\ProvidesClass{rho-class/rho}[2024/09/01 Rho LaTeX class]
+\\DeclareOption*{\\PassOptionsToClass{\\CurrentOption}{extarticle}}
+\\ProcessOptions\\relax
+\\LoadClass[twocolumn]{extarticle}
+\\AtEndOfClass{\\RequirePackage{microtype}}
+
+% Required packages
+\\RequirePackage[utf8]{inputenc}
+\\RequirePackage{etoolbox}
+\\RequirePackage[framemethod=tikz]{mdframed}
+\\RequirePackage{titling}
+\\RequirePackage{lettrine}
+\\RequirePackage[switch]{lineno}
+\\RequirePackage{microtype}
+\\RequirePackage[bottom,hang,flushmargin,ragged]{footmisc}
+\\RequirePackage{fancyhdr}
+\\RequirePackage{xifthen}
+\\RequirePackage{adjustbox}
+\\RequirePackage{adforn}
+\\RequirePackage{lastpage}
+\\RequirePackage[explicit]{titlesec}
+\\RequirePackage{booktabs}
+\\RequirePackage{array}
+\\RequirePackage{caption}
+\\RequirePackage{setspace}
+\\RequirePackage{iflang}
+\\RequirePackage{listings}
+\\RequirePackage{lipsum}
+\\RequirePackage{fontawesome5}
+\\RequirePackage{supertabular}
+\\RequirePackage{csquotes}
+\\RequirePackage{ragged2e}
+\\RequirePackage{ccicons}
+\\RequirePackage{subcaption}
+\\RequirePackage{stfloats}
+\\RequirePackage{authblk}
+\\RequirePackage[figuresright]{rotating}
+
+% Custom packages
+\\RequirePackage{rho-class/rhobabel}
+\\RequirePackage{rho-class/rhoenvs}
+
+% Booleans
+\\newbool{corres-info}
+\\newbool{rho-abstract}
+
+% Page layout
+\\RequirePackage[
+    left=1.5cm,
+    right=1.5cm,
+    top=2cm,
+    bottom=2cm,
+    headsep=0.75cm
+]{geometry}
+
+% Colors
+\\RequirePackage{xcolor}
+\\definecolor{rhocolor}{RGB}{0,90,120}
+\\definecolor{rhored}{RGB}{180,30,30}
+\\definecolor{rholightblue}{RGB}{0,105,170}
+
+% Hyperref
+\\RequirePackage[colorlinks=true,allcolors=rholightblue]{hyperref}
+
+% Fonts
+\\RequirePackage{stix2}
+\\RequirePackage[scaled=0.9]{inconsolata}
+
+% Bibliography
+\\RequirePackage[
+    backend=biber,
+    style=apa,
+    sorting=nyt,
+]{biblatex}
+\\addbibresource{bibliography.bib}
+
+% Commands
+\\newcommand{\\journalname}[1]{\\def\\@journalname{#1}}
+\\newcommand{\\dates}[1]{\\def\\@dates{#1}}
+\\newcommand{\\leadauthor}[1]{\\def\\@leadauthor{#1}}
+\\newcommand{\\footinfo}[1]{\\def\\@footinfo{#1}}
+\\newcommand{\\smalltitle}[1]{\\def\\@smalltitle{#1}}
+\\newcommand{\\institution}[1]{\\def\\@institution{#1}}
+\\newcommand{\\corres}[1]{\\def\\@corres{#1}}
+\\newcommand{\\email}[1]{\\def\\@email{#1}}
+\\newcommand{\\doi}[1]{\\def\\@doi{#1}}
+\\newcommand{\\received}[1]{\\def\\@received{#1}}
+\\newcommand{\\revised}[1]{\\def\\@revised{#1}}
+\\newcommand{\\accepted}[1]{\\def\\@accepted{#1}}
+\\newcommand{\\published}[1]{\\def\\@published{#1}}
+\\newcommand{\\license}[1]{\\def\\@license{#1}}
+
+% Defaults
+\\journalname{Journal Name}
+\\dates{\\today}
+\\leadauthor{Author}
+\\footinfo{}
+\\smalltitle{Title}
+\\institution{Institution}
+\\corres{}
+\\email{}
+\\doi{}
+\\received{}
+\\revised{}
+\\accepted{}
+\\published{}
+\\license{}
+
+% Lettrine command
+\\newcommand{\\rhostart}[1]{\\lettrine[lines=2,lhang=0.15,nindent=0em]{\\color{rhocolor}#1}}
+
+% Title formatting
+\\pretitle{\\begin{flushleft}\\huge\\bfseries\\color{rhocolor}}
+\\posttitle{\\end{flushleft}}
+\\preauthor{\\begin{flushleft}\\large}
+\\postauthor{\\end{flushleft}}
+\\predate{\\begin{flushleft}\\small}
+\\postdate{\\end{flushleft}}
+
+% Section formatting
+\\titleformat{\\section}
+    {\\large\\bfseries\\color{rhocolor}}
+    {\\thesection}{1em}{#1}
+\\titleformat{\\subsection}
+    {\\normalsize\\bfseries}
+    {\\thesubsection}{1em}{#1}
+\\titleformat{\\subsubsection}
+    {\\normalsize\\itshape}
+    {\\thesubsubsection}{1em}{#1}
+
+% Header/footer
+\\pagestyle{fancy}
+\\fancyhf{}
+\\fancyhead[LE,RO]{\\thepage}
+\\fancyhead[RE]{\\small\\@smalltitle}
+\\fancyhead[LO]{\\small\\@leadauthor}
+\\renewcommand{\\headrulewidth}{0.4pt}
+\\fancyfoot[C]{\\small\\@institution}
+
+\\fancypagestyle{firststyle}{
+    \\fancyhf{}
+    \\fancyhead[L]{\\small\\@journalname}
+    \\fancyhead[R]{\\small\\@dates}
+    \\fancyfoot[C]{\\small\\@institution\\\\ \\@footinfo}
+    \\renewcommand{\\headrulewidth}{0.4pt}
+}
+
+% Abstract environment
+\\renewenvironment{abstract}{%
+    \\ifbool{rho-abstract}{%
+        \\small
+        \\begin{mdframed}[
+            linewidth=0.5pt,
+            linecolor=rhocolor,
+            backgroundcolor=rhocolor!5,
+            innerleftmargin=10pt,
+            innerrightmargin=10pt,
+            innertopmargin=10pt,
+            innerbottommargin=10pt
+        ]
+        \\noindent\\textbf{\\abstractname}\\\\
+    }{\\comment}
+}{%
+    \\ifbool{rho-abstract}{%
+        \\end{mdframed}
+    }{\\endcomment}
+}
+
+% Keywords
+\\newcommand{\\keywords}[1]{%
+    \\vspace{0.5em}
+    \\noindent{\\small\\textbf{Keywords:} #1}
+    \\vspace{1em}
+}
+
+% Caption setup
+\\captionsetup{font=small,labelfont=bf}
+
+\\endinput
+`;
+    }
+
+    private getRhoBabelContent(): string {
+        return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rho Babel Package
+% Version 2.1.1 (01/09/2024)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\\NeedsTeXFormat{LaTeX2e}
+\\ProvidesPackage{rho-class/rhobabel}[2024/09/01 Rho babel customization]
+
+% Language-specific settings
+\\addto\\captionsenglish{%
+    \\renewcommand{\\abstractname}{Abstract}%
+    \\renewcommand{\\contentsname}{Contents}%
+    \\renewcommand{\\listfigurename}{List of Figures}%
+    \\renewcommand{\\listtablename}{List of Tables}%
+    \\renewcommand{\\refname}{References}%
+    \\renewcommand{\\bibname}{Bibliography}%
+    \\renewcommand{\\appendixname}{Appendix}%
+}
+
+\\endinput
+`;
+    }
+
+    private getRhoEnvsContent(): string {
+        return `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rho Environments Package
+% Version 2.1.1 (01/09/2024)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\\NeedsTeXFormat{LaTeX2e}
+\\ProvidesPackage{rho-class/rhoenvs}[2024/09/01 Rho environments]
+
+\\RequirePackage{enumitem}
+
+% Customize lists
+\\setlist[itemize]{leftmargin=*,nosep}
+\\setlist[enumerate]{leftmargin=*,nosep}
+
+% Unnumbered list environment
+\\newenvironment{unlist}{%
+    \\begin{list}{}{%
+        \\setlength{\\leftmargin}{1em}%
+        \\setlength{\\itemsep}{0pt}%
+        \\setlength{\\parskip}{0pt}%
+        \\setlength{\\parsep}{0pt}%
+    }
+}{%
+    \\end{list}
+}
+
+% Table note command
+\\newcommand{\\tabletext}[1]{%
+    \\par\\vspace{0.5em}
+    {\\small #1}
+}
+
+\\endinput
+`;
     }
 
     private getIEEEConferenceTemplate(projectName: string): DocumentTemplate {
