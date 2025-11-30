@@ -139,19 +139,42 @@ async function compileDocument() {
         return;
     }
 
-    const terminal = vscode.window.createTerminal('LaTeX Compile');
-    terminal.show();
-    
     const path = require('path');
     const dir = path.dirname(editor.document.fileName);
     const file = path.basename(editor.document.fileName, '.tex');
     
-    // Cross-platform compile command
+    // Build compile commands as an array for clarity
+    const commands = [
+        `pdflatex -interaction=nonstopmode "${file}.tex"`,
+        `biber "${file}"`,
+        `pdflatex -interaction=nonstopmode "${file}.tex"`,
+        `pdflatex -interaction=nonstopmode "${file}.tex"`
+    ];
+
+    // Cross-platform command joining:
+    // - Windows PowerShell: uses `;` as statement separator
+    // - Windows cmd.exe: uses `&` or `&&`
+    // - Linux/macOS (bash/zsh): uses `&&` for conditional execution or `;` for sequential
+    // Using `;` works in PowerShell, bash, and zsh (sequential execution)
+    // For cmd.exe on Windows, we use `&` which is similar to `;`
     const isWindows = process.platform === 'win32';
+    const separator = isWindows ? '; ' : ' && ';
+    
+    const terminal = vscode.window.createTerminal({
+        name: 'LaTeX Compile',
+        cwd: dir
+    });
+    terminal.show();
+    
+    // Set working directory and run commands
+    // On Windows, use Push-Location for reliable directory change in PowerShell
+    // On Unix, use cd with && chaining
     if (isWindows) {
-        terminal.sendText(`cd /d "${dir}" && pdflatex -interaction=nonstopmode "${file}.tex" && biber "${file}" && pdflatex -interaction=nonstopmode "${file}.tex" && pdflatex -interaction=nonstopmode "${file}.tex"`);
+        // PowerShell: use Push-Location for reliable cwd, then run commands with ;
+        terminal.sendText(`Push-Location "${dir}"; ${commands.join('; ')}; Pop-Location`);
     } else {
-        terminal.sendText(`cd "${dir}" && pdflatex -interaction=nonstopmode "${file}.tex" && biber "${file}" && pdflatex -interaction=nonstopmode "${file}.tex" && pdflatex -interaction=nonstopmode "${file}.tex"`);
+        // Unix shells (bash/zsh): use cd && for directory change, && for command chaining
+        terminal.sendText(`cd "${dir}" && ${commands.join(' && ')}`);
     }
 }
 
