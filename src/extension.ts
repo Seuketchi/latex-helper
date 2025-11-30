@@ -142,10 +142,17 @@ async function compileDocument() {
     const terminal = vscode.window.createTerminal('LaTeX Compile');
     terminal.show();
     
-    const dir = require('path').dirname(editor.document.fileName);
-    const file = require('path').basename(editor.document.fileName, '.tex');
+    const path = require('path');
+    const dir = path.dirname(editor.document.fileName);
+    const file = path.basename(editor.document.fileName, '.tex');
     
-    terminal.sendText(`cd "${dir}" && pdflatex -interaction=nonstopmode "${file}.tex" && biber "${file}" && pdflatex -interaction=nonstopmode "${file}.tex" && pdflatex -interaction=nonstopmode "${file}.tex"`);
+    // Cross-platform compile command
+    const isWindows = process.platform === 'win32';
+    if (isWindows) {
+        terminal.sendText(`cd /d "${dir}" && pdflatex -interaction=nonstopmode "${file}.tex" && biber "${file}" && pdflatex -interaction=nonstopmode "${file}.tex" && pdflatex -interaction=nonstopmode "${file}.tex"`);
+    } else {
+        terminal.sendText(`cd "${dir}" && pdflatex -interaction=nonstopmode "${file}.tex" && biber "${file}" && pdflatex -interaction=nonstopmode "${file}.tex" && pdflatex -interaction=nonstopmode "${file}.tex"`);
+    }
 }
 
 export function deactivate() {}

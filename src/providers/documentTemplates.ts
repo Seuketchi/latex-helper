@@ -98,14 +98,16 @@ export class DocumentTemplateProvider {
             }
         }
 
-        // Create files
+        // Create files - handle cross-platform paths
         for (const [filename, content] of Object.entries(template.files)) {
-            const filePath = path.join(projectPath, filename);
+            // Convert forward slashes to platform-specific separator
+            const normalizedFilename = filename.split('/').join(path.sep);
+            const filePath = path.join(projectPath, normalizedFilename);
             const fileDir = path.dirname(filePath);
             if (!fs.existsSync(fileDir)) {
                 fs.mkdirSync(fileDir, { recursive: true });
             }
-            fs.writeFileSync(filePath, content);
+            fs.writeFileSync(filePath, content, 'utf8');
         }
     }
 

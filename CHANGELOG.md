@@ -4,6 +4,13 @@ All notable changes to the "LaTeX Thesis Helper" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.4.1] - 2025-12-01
+
+### Fixed
+- 🐛 Cross-platform path handling for Windows, macOS, and Linux
+- 🐛 Template file creation now works correctly on all operating systems
+- 🐛 Compile command now works properly on Windows
+
 ## [0.4.0] - 2025-11-29
 
 ### Added
