@@ -140,42 +140,60 @@ async function compileDocument() {
     }
 
     const path = require('path');
+    const { exec } = require('child_process');
     const dir = path.dirname(editor.document.fileName);
     const file = path.basename(editor.document.fileName, '.tex');
-    
-    // Build compile commands as an array for clarity
-    const commands = [
-        `pdflatex -interaction=nonstopmode "${file}.tex"`,
-        `biber "${file}"`,
-        `pdflatex -interaction=nonstopmode "${file}.tex"`,
-        `pdflatex -interaction=nonstopmode "${file}.tex"`
-    ];
-
-    // Cross-platform command joining:
-    // - Windows PowerShell: uses `;` as statement separator
-    // - Windows cmd.exe: uses `&` or `&&`
-    // - Linux/macOS (bash/zsh): uses `&&` for conditional execution or `;` for sequential
-    // Using `;` works in PowerShell, bash, and zsh (sequential execution)
-    // For cmd.exe on Windows, we use `&` which is similar to `;`
     const isWindows = process.platform === 'win32';
-    const separator = isWindows ? '; ' : ' && ';
+
+    // Check if pdflatex is available
+    const checkCommand = isWindows ? 'where pdflatex' : 'which pdflatex';
     
-    const terminal = vscode.window.createTerminal({
-        name: 'LaTeX Compile',
-        cwd: dir
+    exec(checkCommand, (error: Error | null) => {
+        if (error) {
+            // pdflatex not found - show helpful message
+            const installMessage = isWindows 
+                ? 'Install MiKTeX (https://miktex.org) or TeX Live (https://tug.org/texlive/)'
+                : process.platform === 'darwin'
+                    ? 'Install MacTeX (https://tug.org/mactex/) or run: brew install --cask mactex'
+                    : 'Install TeX Live: sudo apt install texlive-full (Debian/Ubuntu) or sudo dnf install texlive-scheme-full (Fedora)';
+            
+            vscode.window.showErrorMessage(
+                `LaTeX not found. ${installMessage}`,
+                'Open Installation Guide'
+            ).then(selection => {
+                if (selection === 'Open Installation Guide') {
+                    vscode.env.openExternal(vscode.Uri.parse(
+                        isWindows ? 'https://miktex.org/download' 
+                            : process.platform === 'darwin' ? 'https://tug.org/mactex/'
+                            : 'https://tug.org/texlive/acquire-netinstall.html'
+                    ));
+                }
+            });
+            return;
+        }
+
+        // LaTeX found - proceed with compilation
+        const commands = [
+            `pdflatex -interaction=nonstopmode "${file}.tex"`,
+            `biber "${file}"`,
+            `pdflatex -interaction=nonstopmode "${file}.tex"`,
+            `pdflatex -interaction=nonstopmode "${file}.tex"`
+        ];
+
+        const terminal = vscode.window.createTerminal({
+            name: 'LaTeX Compile',
+            cwd: dir
+        });
+        terminal.show();
+
+        if (isWindows) {
+            // PowerShell: use Push-Location for reliable cwd, then run commands with ;
+            terminal.sendText(`Push-Location "${dir}"; ${commands.join('; ')}; Pop-Location`);
+        } else {
+            // Unix shells (bash/zsh): use cd && for directory change, && for command chaining
+            terminal.sendText(`cd "${dir}" && ${commands.join(' && ')}`);
+        }
     });
-    terminal.show();
-    
-    // Set working directory and run commands
-    // On Windows, use Push-Location for reliable directory change in PowerShell
-    // On Unix, use cd with && chaining
-    if (isWindows) {
-        // PowerShell: use Push-Location for reliable cwd, then run commands with ;
-        terminal.sendText(`Push-Location "${dir}"; ${commands.join('; ')}; Pop-Location`);
-    } else {
-        // Unix shells (bash/zsh): use cd && for directory change, && for command chaining
-        terminal.sendText(`cd "${dir}" && ${commands.join(' && ')}`);
-    }
 }
 
 export function deactivate() {}

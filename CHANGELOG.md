@@ -4,6 +4,13 @@ All notable changes to the "LaTeX Thesis Helper" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.4.3] - 2025-12-01
+
+### Added
+- ✨ LaTeX installation detection before compiling
+- 💡 Helpful error messages with platform-specific installation instructions
+- 🔗 "Open Installation Guide" button linking to MiKTeX (Windows), MacTeX (macOS), or TeX Live (Linux)
+
 ## [0.4.2] - 2025-12-01
 
 ### Fixed
