@@ -141,6 +141,19 @@ See the [issue tracker](https://github.com/Seuketchi/latex-helper/issues) for cu
 
 ## 📝 Release Notes
 
+### 0.4.1
+- 🐛 **Fix:** Cross-platform path handling for Windows, macOS, and Linux
+- 🐛 **Fix:** Windows compile command now works correctly
+- 🐛 **Fix:** UTF-8 encoding for all created files
+
+### 0.4.0
+- ✨ **New:** COE198 Research Proposal template (MSU-IIT Rho class)
+- 📚 Complete Rho LaTeX class included with template
+
+### 0.3.0
+- ✨ **New:** Document Templates feature — Create complete LaTeX projects from templates
+- 📄 Templates: IEEE Conference, IEEE Journal, Thesis, Article, Proposal, Dissertation
+
 ### 0.2.0
 - ✨ **New:** Word count goal tracker with progress bar
 - ✨ **New:** Configurable word count target in settings
