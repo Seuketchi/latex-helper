@@ -4,6 +4,13 @@ All notable changes to the "LaTeX Thesis Helper" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.4.2] - 2025-12-01
+
+### Fixed
+- 🐛 Fixed PowerShell compatibility issue on Windows (replaced `&&` with `;` separator)
+- 🐛 Improved cross-platform terminal command handling for Windows, macOS, and Linux
+- 🐛 Use `Push-Location`/`Pop-Location` for reliable directory handling in PowerShell
+
 ## [0.4.1] - 2025-12-01
 
 ### Fixed
