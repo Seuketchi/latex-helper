@@ -4,6 +4,13 @@ All notable changes to the "LaTeX Thesis Helper" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.4.4] - 2025-12-02
+
+### Changed
+- 🔄 Compile command now uses LaTeX Workshop extension instead of custom implementation
+- ✨ Automatically prompts to install LaTeX Workshop if not present
+- 🧹 Removed redundant LaTeX distribution detection (LaTeX Workshop handles this)
+
 ## [0.4.3] - 2025-12-01
 
 ### Added

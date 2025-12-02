@@ -139,61 +139,26 @@ async function compileDocument() {
         return;
     }
 
-    const path = require('path');
-    const { exec } = require('child_process');
-    const dir = path.dirname(editor.document.fileName);
-    const file = path.basename(editor.document.fileName, '.tex');
-    const isWindows = process.platform === 'win32';
-
-    // Check if pdflatex is available
-    const checkCommand = isWindows ? 'where pdflatex' : 'which pdflatex';
+    // Check if LaTeX Workshop extension is installed
+    const latexWorkshop = vscode.extensions.getExtension('James-Yu.latex-workshop');
     
-    exec(checkCommand, (error: Error | null) => {
-        if (error) {
-            // pdflatex not found - show helpful message
-            const installMessage = isWindows 
-                ? 'Install MiKTeX (https://miktex.org) or TeX Live (https://tug.org/texlive/)'
-                : process.platform === 'darwin'
-                    ? 'Install MacTeX (https://tug.org/mactex/) or run: brew install --cask mactex'
-                    : 'Install TeX Live: sudo apt install texlive-full (Debian/Ubuntu) or sudo dnf install texlive-scheme-full (Fedora)';
-            
-            vscode.window.showErrorMessage(
-                `LaTeX not found. ${installMessage}`,
-                'Open Installation Guide'
-            ).then(selection => {
-                if (selection === 'Open Installation Guide') {
-                    vscode.env.openExternal(vscode.Uri.parse(
-                        isWindows ? 'https://miktex.org/download' 
-                            : process.platform === 'darwin' ? 'https://tug.org/mactex/'
-                            : 'https://tug.org/texlive/acquire-netinstall.html'
-                    ));
-                }
-            });
-            return;
+    if (latexWorkshop) {
+        // LaTeX Workshop is installed - use its build command
+        vscode.commands.executeCommand('latex-workshop.build');
+    } else {
+        // LaTeX Workshop not installed - prompt to install
+        const selection = await vscode.window.showWarningMessage(
+            'LaTeX Workshop extension is recommended for compiling LaTeX documents. It provides compilation, PDF preview, and error highlighting.',
+            'Install LaTeX Workshop',
+            'Learn More'
+        );
+        
+        if (selection === 'Install LaTeX Workshop') {
+            vscode.commands.executeCommand('workbench.extensions.installExtension', 'James-Yu.latex-workshop');
+        } else if (selection === 'Learn More') {
+            vscode.env.openExternal(vscode.Uri.parse('https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop'));
         }
-
-        // LaTeX found - proceed with compilation
-        const commands = [
-            `pdflatex -interaction=nonstopmode "${file}.tex"`,
-            `biber "${file}"`,
-            `pdflatex -interaction=nonstopmode "${file}.tex"`,
-            `pdflatex -interaction=nonstopmode "${file}.tex"`
-        ];
-
-        const terminal = vscode.window.createTerminal({
-            name: 'LaTeX Compile',
-            cwd: dir
-        });
-        terminal.show();
-
-        if (isWindows) {
-            // PowerShell: use Push-Location for reliable cwd, then run commands with ;
-            terminal.sendText(`Push-Location "${dir}"; ${commands.join('; ')}; Pop-Location`);
-        } else {
-            // Unix shells (bash/zsh): use cd && for directory change, && for command chaining
-            terminal.sendText(`cd "${dir}" && ${commands.join(' && ')}`);
-        }
-    });
+    }
 }
 
 export function deactivate() {}
