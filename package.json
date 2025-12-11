@@ -199,6 +199,23 @@
           "type": "number",
           "default": 0,
           "description": "Set a word count goal for your document. Set to 0 to disable."
+        },
+        "latexHelper.latexEngine": {
+          "type": "string",
+          "default": "pdflatex",
+          "enum": ["pdflatex", "xelatex", "lualatex"],
+          "description": "LaTeX engine to use for compilation."
+        },
+        "latexHelper.bibliographyTool": {
+          "type": "string",
+          "default": "none",
+          "enum": ["none", "biber", "bibtex"],
+          "description": "Bibliography tool to use. Set to 'none' if not using citations."
+        },
+        "latexHelper.compileOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically compile document on save."
         }
       }
     }

@@ -145,20 +145,40 @@ async function compileDocument() {
     if (latexWorkshop) {
         // LaTeX Workshop is installed - use its build command
         vscode.commands.executeCommand('latex-workshop.build');
-    } else {
-        // LaTeX Workshop not installed - prompt to install
-        const selection = await vscode.window.showWarningMessage(
-            'LaTeX Workshop extension is recommended for compiling LaTeX documents. It provides compilation, PDF preview, and error highlighting.',
-            'Install LaTeX Workshop',
-            'Learn More'
-        );
-        
-        if (selection === 'Install LaTeX Workshop') {
-            vscode.commands.executeCommand('workbench.extensions.installExtension', 'James-Yu.latex-workshop');
-        } else if (selection === 'Learn More') {
-            vscode.env.openExternal(vscode.Uri.parse('https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop'));
-        }
+        return;
     }
+
+    // LaTeX Workshop not installed - use built-in compiler
+    // Get configuration
+    const config = vscode.workspace.getConfiguration('latexHelper');
+    const latexEngine = config.get<string>('latexEngine', 'pdflatex');
+    const bibTool = config.get<string>('bibliographyTool', 'none');
+
+    const terminal = vscode.window.createTerminal('LaTeX Compile');
+    terminal.show();
+    
+    const path = require('path');
+    const dir = path.dirname(editor.document.fileName);
+    const file = path.basename(editor.document.fileName, '.tex');
+    
+    // Build compile command based on settings
+    const isWindows = process.platform === 'win32';
+    const cdCommand = isWindows ? `cd /d "${dir}"` : `cd "${dir}"`;
+    const compileCmd = `${latexEngine} -interaction=nonstopmode "${file}.tex"`;
+    
+    let fullCommand: string;
+    
+    if (bibTool === 'none') {
+        // Simple compile: just run LaTeX twice for references
+        fullCommand = `${cdCommand} && ${compileCmd} && ${compileCmd}`;
+    } else {
+        // Full compile with bibliography: LaTeX -> bib tool -> LaTeX -> LaTeX
+        const bibCmd = `${bibTool} "${file}"`;
+        fullCommand = `${cdCommand} && ${compileCmd} && ${bibCmd} && ${compileCmd} && ${compileCmd}`;
+    }
+    
+    terminal.sendText(fullCommand);
+    vscode.window.showInformationMessage(`Compiling with ${latexEngine}...`);
 }
 
 export function deactivate() {}
