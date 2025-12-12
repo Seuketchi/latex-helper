@@ -139,46 +139,86 @@ async function compileDocument() {
         return;
     }
 
-    // Check if LaTeX Workshop extension is installed
-    const latexWorkshop = vscode.extensions.getExtension('James-Yu.latex-workshop');
-    
-    if (latexWorkshop) {
-        // LaTeX Workshop is installed - use its build command
-        vscode.commands.executeCommand('latex-workshop.build');
-        return;
-    }
-
-    // LaTeX Workshop not installed - use built-in compiler
-    // Get configuration
-    const config = vscode.workspace.getConfiguration('latexHelper');
-    const latexEngine = config.get<string>('latexEngine', 'pdflatex');
-    const bibTool = config.get<string>('bibliographyTool', 'none');
-
-    const terminal = vscode.window.createTerminal('LaTeX Compile');
-    terminal.show();
-    
     const path = require('path');
+    const { exec } = require('child_process');
     const dir = path.dirname(editor.document.fileName);
     const file = path.basename(editor.document.fileName, '.tex');
-    
-    // Build compile command based on settings
     const isWindows = process.platform === 'win32';
-    const cdCommand = isWindows ? `cd /d "${dir}"` : `cd "${dir}"`;
-    const compileCmd = `${latexEngine} -interaction=nonstopmode "${file}.tex"`;
+    const isMac = process.platform === 'darwin';
+
+    // Check if pdflatex is available
+    const checkCommand = isWindows ? 'where pdflatex' : 'which pdflatex';
     
-    let fullCommand: string;
-    
-    if (bibTool === 'none') {
-        // Simple compile: just run LaTeX twice for references
-        fullCommand = `${cdCommand} && ${compileCmd} && ${compileCmd}`;
+    exec(checkCommand, async (error: Error | null) => {
+        if (error) {
+            // LaTeX not found - show guided installation prompt
+            await showLaTeXInstallGuide(isWindows, isMac);
+            return;
+        }
+
+        // LaTeX found - proceed with compilation
+        const config = vscode.workspace.getConfiguration('latexHelper');
+        const latexEngine = config.get<string>('latexEngine', 'pdflatex');
+        const bibTool = config.get<string>('bibliographyTool', 'none');
+
+        const commands: string[] = [];
+        commands.push(`${latexEngine} -interaction=nonstopmode "${file}.tex"`);
+        
+        if (bibTool !== 'none') {
+            commands.push(`${bibTool} "${file}"`);
+            commands.push(`${latexEngine} -interaction=nonstopmode "${file}.tex"`);
+        }
+        commands.push(`${latexEngine} -interaction=nonstopmode "${file}.tex"`);
+
+        const terminal = vscode.window.createTerminal({
+            name: 'LaTeX Compile',
+            cwd: dir
+        });
+        terminal.show();
+
+        if (isWindows) {
+            // PowerShell: use Push-Location and semicolons
+            terminal.sendText(`Push-Location "${dir}"; ${commands.join('; ')}; Pop-Location`);
+        } else {
+            // Unix shells: use cd && and && chaining
+            terminal.sendText(`cd "${dir}" && ${commands.join(' && ')}`);
+        }
+        
+        vscode.window.showInformationMessage(`Compiling with ${latexEngine}...`);
+    });
+}
+
+async function showLaTeXInstallGuide(isWindows: boolean, isMac: boolean) {
+    let message: string;
+    let downloadUrl: string;
+    let installCommand: string;
+
+    if (isWindows) {
+        message = 'LaTeX is not installed. Install MiKTeX to compile LaTeX documents.';
+        downloadUrl = 'https://miktex.org/download';
+        installCommand = 'winget install MiKTeX.MiKTeX';
+    } else if (isMac) {
+        message = 'LaTeX is not installed. Install MacTeX to compile LaTeX documents.';
+        downloadUrl = 'https://tug.org/mactex/';
+        installCommand = 'brew install --cask mactex';
     } else {
-        // Full compile with bibliography: LaTeX -> bib tool -> LaTeX -> LaTeX
-        const bibCmd = `${bibTool} "${file}"`;
-        fullCommand = `${cdCommand} && ${compileCmd} && ${bibCmd} && ${compileCmd} && ${compileCmd}`;
+        message = 'LaTeX is not installed. Install TeX Live to compile LaTeX documents.';
+        downloadUrl = 'https://tug.org/texlive/';
+        installCommand = 'sudo apt install texlive-full';
     }
-    
-    terminal.sendText(fullCommand);
-    vscode.window.showInformationMessage(`Compiling with ${latexEngine}...`);
+
+    const selection = await vscode.window.showErrorMessage(
+        message,
+        'Download Installer',
+        'Copy Install Command'
+    );
+
+    if (selection === 'Download Installer') {
+        vscode.env.openExternal(vscode.Uri.parse(downloadUrl));
+    } else if (selection === 'Copy Install Command') {
+        await vscode.env.clipboard.writeText(installCommand);
+        vscode.window.showInformationMessage(`Copied to clipboard: ${installCommand}`);
+    }
 }
 
 export function deactivate() {}

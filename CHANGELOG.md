@@ -4,6 +4,16 @@ All notable changes to the "LaTeX Thesis Helper" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.5.1] - 2025-12-13
+
+### Changed
+- 📦 Removed COE198 Research Proposal template zip (reducing extension size)
+- 👋 Removed LaTeX Workshop dependency - extension now works standalone
+- 💡 **Guided LaTeX installation** - When LaTeX isn't found:
+  - "Download Installer" button opens MiKTeX/MacTeX/TeX Live download page
+  - "Copy Install Command" copies `winget install MiKTeX.MiKTeX` (Windows), `brew install --cask mactex` (macOS), or `sudo apt install texlive-full` (Linux) to clipboard
+- 🐧 Fixed PowerShell compatibility (uses `;` separator and `Push-Location`)
+
 ## [0.5.0] - 2025-12-13
 
 ### Added
