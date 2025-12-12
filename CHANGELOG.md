@@ -4,6 +4,19 @@ All notable changes to the "LaTeX Thesis Helper" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.5.0] - 2025-12-13
+
+### Added
+- 🔧 **Configurable LaTeX Engine** - Choose between `pdflatex`, `xelatex`, or `lualatex`
+- 📚 **Configurable Bibliography Tool** - Choose `none`, `biber`, or `bibtex`
+- 🔄 **Compile on Save** option (disabled by default)
+- ✅ **Cross-platform CI/CD** - Automated testing on Windows, macOS, and Linux
+- 🧪 **Improved test suite** - Extension activation, command registration, and cross-platform tests
+
+### Changed
+- 🚀 Compile command now respects user configuration for LaTeX engine and bibliography tool
+- 📦 Publish workflow now requires all platform tests to pass before releasing
+
 ## [0.4.4] - 2025-12-02
 
 ### Changed
